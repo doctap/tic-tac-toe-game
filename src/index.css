@@ -3,6 +3,18 @@ body {
 	margin: 20px;
 }
 
+.main {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.main>* {
+	margin-bottom: 2rem;
+}
+
 ol,
 ul {
 	padding-left: 30px;

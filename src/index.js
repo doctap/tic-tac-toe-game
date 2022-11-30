@@ -45,6 +45,8 @@ class Board extends React.Component {
 class Game extends React.Component {
 	constructor(props) {
 		super(props);
+		this.name1 = props.name1 || 'X';
+		this.name2 = props.name2 || 'O';
 		this.state = {
 			history: [{
 				squares: Array(9).fill(null),
@@ -95,10 +97,12 @@ class Game extends React.Component {
 		});
 
 		let status;
-		if (winner) {
-			status = 'Выирал ' + winner;
+		if (winner === 'X') {
+			status = 'Выиграл ' + this.name1;
+		} else if (winner === 'O') {
+			status = 'Выиграл ' + this.name2;
 		} else {
-			status = 'Следующий ход: ' + (this.state.xIsNext ? 'X' : 'O');
+			status = 'Следующий ход: ' + (this.state.xIsNext ? this.name1 : this.name2);
 		}
 
 		return (
@@ -121,7 +125,16 @@ class Game extends React.Component {
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Game />);
+root.render(getGameBoards());
+
+function getGameBoards() {
+	const gamers = prompt('Введите игроков через пробел!').replace(/([^ ]+ [^ ]+) /g, '$1,').split(',').map(e => e.split(' '));
+	return (
+		<div className='main'>
+			{gamers.map(p => <Game name1={p[0]} name2={p[1]} />)}
+		</div>
+	)
+}
 
 function calculateWinner(squares) {
 	const lines = [
