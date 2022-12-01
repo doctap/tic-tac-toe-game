@@ -128,10 +128,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(getGameBoards());
 
 function getGameBoards() {
-	const gamers = prompt('Введите игроков через пробел!').replace(/([^ ]+ [^ ]+) /g, '$1,').split(',').map(e => e.split(' '));
+	const gamers = prompt('Введите игроков через пробел!').split(' ');
 	return (
 		<div className='main'>
-			{gamers.map(p => <Game name1={p[0]} name2={p[1]} />)}
+			{getMatrix(gamers, 2).map(p => <Game name1={p[0]} name2={p[1]} />)}
 		</div>
 	)
 }
@@ -154,4 +154,17 @@ function calculateWinner(squares) {
 		}
 	}
 	return null;
+}
+
+function getMatrix(a, splitter) {
+	let matrix = [], i, k;
+
+	for (i = 0, k = -1; i < a.length; i++) {
+		if (i % splitter === 0) {
+			k++;
+			matrix[k] = [];
+		}
+		matrix[k].push(a[i])
+	}
+	return matrix;
 }
